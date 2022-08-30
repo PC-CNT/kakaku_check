@@ -1,0 +1,21 @@
+name: run script
+
+on:
+  [ workflow_dispatch ]
+  # schedule:
+  #   - cron: '0 12 * * *'
+
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+      
+      - name: Run script
+        run: |
+          pip install beautifulsoup4
+          python __create_json.py
