@@ -57,7 +57,7 @@ def price_get(load_url):
 
 #============================================================
 
-with open('__game.csv', 'r') as c:
+with open('__game.csv', 'r', encoding='shift_jis') as c:
 	for line in c:
 		if not '----------タイトル----------' in line:#最初の行だけ飛ばしたいので
 			l = line.split(r',')
