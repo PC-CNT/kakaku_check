@@ -3,7 +3,7 @@ name: run script
 on:
   [ workflow_dispatch ]
   # schedule:
-  #   - cron: '0 12 * * *'
+  #   - cron: '0 1,13 * * *'
 
 
 jobs:
@@ -19,3 +19,11 @@ jobs:
         run: |
           pip install beautifulsoup4
           python __create_json.py
+
+      - name: git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto generated"
+          git push
