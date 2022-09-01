@@ -39,7 +39,7 @@ def get_hardware(x):
 
 #============================================================
 
-with open('__game.csv', 'r', encoding='shift_jis') as c:
+with open('__game.csv', 'r', encoding='UTF-8') as c:
 	for line in c:
 		if not '----------タイトル----------' in line:#最初の行だけ飛ばしたいので
 			l = line.split(r',')
