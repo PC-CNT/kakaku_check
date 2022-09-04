@@ -21,7 +21,12 @@ def price_get(load_url):
 		P = int( data.find(class_="productDetail--detail__price js-productMainRenderedPrice").find('span').text.replace(r',', r'') )
 	
 	elif r'https://store.steampowered.com/app/' in load_url:
-		P = int( data.find(class_="game_purchase_price").text.replace(r'¥', r'').replace(r',', r'').replace('\t', r'').replace(' ', r'').replace('\r\n', r'') )
+		price = data.find(class_="game_purchase_price")
+
+		if not price:#セール時
+			price = data.find(class_="discount_final_price")
+
+		P = int( price.text.replace(r'¥', r'').replace(r',', r'').replace('\t', r'').replace(' ', r'').replace('\r\n', r'') )
 
 	else:
 		P = False
