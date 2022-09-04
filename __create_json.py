@@ -15,18 +15,31 @@ def price_get(load_url):
 	data = BeautifulSoup(html.content, "html.parser")
 
 	if r'https://store.playstation.com/' in load_url:
-		P = int( data.find(class_="psw-t-title-m").text.replace(r'￥', r'').replace(r',', r'') )
+		price_ps = data.find(class_="psw-t-title-m")
+
+		if not price_ps:#セール時
+			data.find(class_="psw-t-title-m psw-m-r-4")
+
+		P = int( price_ps.text.replace(r'￥', r'').replace(r',', r'') )
+
 
 	elif r'https://store-jp.nintendo.com/list/software/' in load_url:
-		P = int( data.find(class_="productDetail--detail__price js-productMainRenderedPrice").find('span').text.replace(r',', r'') )
+		price_sw = data.find(class_="productDetail--detail__price js-productMainRenderedPrice")
 	
+		if not price_sw:#セール時
+			price_steam = data.find(class_="productDetail--detail__pricePrice js-productMainRenderedPrice")
+	
+		P = int( price_sw.find('span').text.replace(r',', r'') )
+
+
 	elif r'https://store.steampowered.com/app/' in load_url:
-		price = data.find(class_="game_purchase_price")
+		price_steam = data.find(class_="game_purchase_price")
 
-		if not price:#セール時
-			price = data.find(class_="discount_final_price")
+		if not price_steam:#セール時
+			price_steam = data.find(class_="discount_final_price")
 
-		P = int( price.text.replace(r'¥', r'').replace(r',', r'').replace('\t', r'').replace(' ', r'').replace('\r\n', r'') )
+		P = int( price_steam.text.replace(r'¥', r'').replace(r',', r'').replace('\t', r'').replace(' ', r'').replace('\r\n', r'') )
+
 
 	else:
 		P = False
