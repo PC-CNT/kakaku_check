@@ -27,7 +27,7 @@ def price_get(load_url):
 		price_sw = data.find(class_="productDetail--detail__price js-productMainRenderedPrice")
 	
 		if not price_sw:#セール時
-			price_steam = data.find(class_="productDetail--detail__pricePrice js-productMainRenderedPrice")
+			price_sw = data.find(class_="productDetail--detail__pricePrice js-productMainRenderedPrice")
 	
 		P = int( price_sw.find('span').text.replace(r',', r'') )
 
@@ -83,7 +83,7 @@ with open('__game.csv', 'r', encoding='UTF-8') as c:
 				j = json.loads(f.read())
 
 				d_today = ( str(datetime.date.today())[2:] ).replace(r'-', '')#日付を持ってくる
-				
+
 				if not d_today in j['labels']:#今日の日付がないなら(≒一日2回以上書き込まないにする)
 					j['labels'] += [ d_today ]
 
