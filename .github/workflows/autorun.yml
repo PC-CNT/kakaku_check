@@ -1,7 +1,7 @@
 name: run script
 
 on:
-  #[ workflow_dispatch ]
+  # [ workflow_dispatch ]
    schedule:
      - cron: '0 1,13 * * *'
 
@@ -20,6 +20,13 @@ jobs:
           pip install beautifulsoup4
           python __create_json.py
 
+      - name: diff
+        id: diff
+        run: |
+          git add -N .
+          git diff --name-only --exit-code
+        continue-on-error: true
+
       - name: git
         run: |
           git config user.name "github-actions[bot]"
@@ -27,3 +34,4 @@ jobs:
           git add .
           git commit -m "Auto generated"
           git push
+        if: steps.diff.outcome == 'failure'
